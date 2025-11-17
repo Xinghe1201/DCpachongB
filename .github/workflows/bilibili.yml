@@ -24,7 +24,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         
-    - name: 安装Playwright浏览器（自动处理系统依赖）
+    - name: 安装Playwright浏览器
       run: |
         python -m playwright install --with-deps chromium
         
@@ -40,10 +40,11 @@ jobs:
           crawled_data.json
         retention-days: 90
         
-    - name: 提交去重数据库
-      run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add crawled_data.json
-        git commit -m "Update crawl deduplication database [skip ci]" || exit 0
-        git push
+    # 注释掉推送步骤，使用Artifacts保存数据
+    # - name: 提交去重数据库
+    #   run: |
+    #     git config --local user.email "action@github.com"
+    #     git config --local user.name "GitHub Action"
+    #     git add crawled_data.json
+    #     git commit -m "Update crawl deduplication database [skip ci]" || exit 0
+    #     git push
